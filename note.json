@@ -1,0 +1,1708 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n\nhttps://data.cityofchicago.org/Transportation/Taxi-Trips-Dashboard/spcw-brbq\nhttps://data.cityofchicago.org/Transportation/Taxi-Trips/wrvz-psew",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 10:50:09 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003e\u003ca href\u003d\"https://data.cityofchicago.org/Transportation/Taxi-Trips-Dashboard/spcw-brbq\"\u003ehttps://data.cityofchicago.org/Transportation/Taxi-Trips-Dashboard/spcw-brbq\u003c/a\u003e\u003cbr/\u003e\u003ca href\u003d\"https://data.cityofchicago.org/Transportation/Taxi-Trips/wrvz-psew\"\u003ehttps://data.cityofchicago.org/Transportation/Taxi-Trips/wrvz-psew\u003c/a\u003e\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499317526864_-1884535552",
+      "id": "20170706-010526_1983250678",
+      "dateCreated": "Jul 6, 2017 1:05:26 AM",
+      "dateStarted": "Jul 6, 2017 10:50:09 AM",
+      "dateFinished": "Jul 6, 2017 10:50:09 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\nfrom datetime import date\nfrom datetime import datetime\nfrom pyspark.sql import Row\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col\nfrom pyspark.sql.functions import dayofmonth\nfrom pyspark.sql.functions import monotonically_increasing_id\nfrom pyspark.sql.functions import month\nfrom pyspark.sql.functions import hour\nfrom pyspark.sql.functions import udf\nfrom pyspark.sql.functions import unix_timestamp\nfrom pyspark.sql.functions import year\nfrom pyspark.sql.functions import avg\nfrom pyspark.sql.functions import sum\nfrom pyspark.sql.types import *\nfrom pyspark.sql.types import DoubleType\nfrom pyspark.sql.types import TimestampType\n\nfrom IPython.core.display import display\nfrom dateutil.parser import parse",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 4:22:32 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "python"
+        },
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1499297175257_-1735552369",
+      "id": "20170705-192615_1170594369",
+      "dateCreated": "Jul 5, 2017 7:26:15 PM",
+      "dateStarted": "Jul 6, 2017 4:22:32 PM",
+      "dateFinished": "Jul 6, 2017 4:22:32 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\npath \u003d \"s3a://public-datasets-playground-062117/chicago-taxi-data/parquet/chi-taxi-trips-all\"\npath \u003d \"file:///C:\\\\temp\\\\ChicagoTaxi062117\\\\parquet\\\\chi-taxi-trips-*-parquet\"",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 4:22:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "python"
+        },
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1499297273172_-1620607681",
+      "id": "20170705-192753_1669455334",
+      "dateCreated": "Jul 5, 2017 7:27:53 PM",
+      "dateStarted": "Jul 6, 2017 4:22:35 PM",
+      "dateFinished": "Jul 6, 2017 4:22:35 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ntaxiTripsParquetDF \u003d spark.read \\\n        .option(\"mergeSchema\", \"false\") \\\n        .option(\"spark.sql.parquet.mergeSchema\", \"false\") \\\n        .option(\"filterPushdown\", \"true\") \\\n        .option(\"spark.sql.parquet.filterPushdown\", \"true\") \\\n        .option(\"spark.hadoop.fs.s3a.impl\", \"org.apache.hadoop.fs.s3a.S3AFileSystem\") \\\n        .parquet(path)",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 4:22:37 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "python"
+        },
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1499297371227_1187460002",
+      "id": "20170705-192931_1596421663",
+      "dateCreated": "Jul 5, 2017 7:29:31 PM",
+      "dateStarted": "Jul 6, 2017 4:22:37 PM",
+      "dateFinished": "Jul 6, 2017 4:22:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ntaxiTripsParquetDF.printSchema()\ntaxiTripsParquetDF.take(1)\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 4:22:43 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "python"
+        },
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- TripID: string (nullable \u003d true)\n |-- TaxiID: string (nullable \u003d true)\n |-- TripStartTS: timestamp (nullable \u003d true)\n |-- TripEndTS: timestamp (nullable \u003d true)\n |-- TripSeconds: integer (nullable \u003d true)\n |-- TripMiles: double (nullable \u003d true)\n |-- PickupCensusTract: long (nullable \u003d true)\n |-- DropoffCensusTract: long (nullable \u003d true)\n |-- PickupCommunityArea: integer (nullable \u003d true)\n |-- DropoffCommunityArea: integer (nullable \u003d true)\n |-- Fare: double (nullable \u003d true)\n |-- Tips: double (nullable \u003d true)\n |-- Tolls: double (nullable \u003d true)\n |-- Extras: double (nullable \u003d true)\n |-- TripTotal: double (nullable \u003d true)\n |-- PaymentType: string (nullable \u003d true)\n |-- Company: string (nullable \u003d true)\n |-- PickupCentroidLatitude: double (nullable \u003d true)\n |-- PickupCentroidLongitude: double (nullable \u003d true)\n |-- PickupCentroidLocation: string (nullable \u003d true)\n |-- DropoffCentroidLatitude: double (nullable \u003d true)\n |-- DropoffCentroidLongitude: double (nullable \u003d true)\n |-- DropoffCentroidLocation: string (nullable \u003d true)\n |-- CommunityAreas: integer (nullable \u003d true)\n |-- TripStartDT: date (nullable \u003d true)\n |-- TripEndDT: date (nullable \u003d true)\n |-- TripStartDay: integer (nullable \u003d true)\n |-- TripStartMonth: integer (nullable \u003d true)\n |-- TripStartYear: integer (nullable \u003d true)\n\n[Row(TripID\u003d\u0027ab18f590fb22912f3591c0c8b58ae2a37dd2f40e\u0027, TaxiID\u003d\u0027d3068abc56994f67ba73bdbd3610e9baf804a34c6e9e5de48b83073b1aff026ebc19574684af03013a2158a0a93910c452451dcc36daa490456bfcc601b56a22\u0027, TripStartTS\u003ddatetime.datetime(2014, 5, 23, 19, 0), TripEndTS\u003ddatetime.datetime(2014, 5, 23, 19, 15), TripSeconds\u003d840, TripMiles\u003d2.4, PickupCensusTract\u003d17031062200, DropoffCensusTract\u003d17031080300, PickupCommunityArea\u003d6, DropoffCommunityArea\u003d8, Fare\u003d9.25, Tips\u003d2.0, Tolls\u003d0.0, Extras\u003d1.0, TripTotal\u003d12.25, PaymentType\u003d\u0027Credit Card\u0027, Company\u003dNone, PickupCentroidLatitude\u003d41.94258518, PickupCentroidLongitude\u003d-87.656644092, PickupCentroidLocation\u003d\u0027POINT (-87.656644 41.942585)\u0027, DropoffCentroidLatitude\u003d41.90749193, DropoffCentroidLongitude\u003d-87.63576009, DropoffCentroidLocation\u003d\u0027POINT (-87.63576 41.907492)\u0027, CommunityAreas\u003d57, TripStartDT\u003ddatetime.date(2014, 5, 23), TripEndDT\u003ddatetime.date(2014, 5, 23), TripStartDay\u003d23, TripStartMonth\u003d5, TripStartYear\u003d2014)]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499297391826_-1201415270",
+      "id": "20170705-192951_1405592867",
+      "dateCreated": "Jul 5, 2017 7:29:51 PM",
+      "dateStarted": "Jul 6, 2017 4:22:43 PM",
+      "dateFinished": "Jul 6, 2017 4:22:45 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Total Records",
+      "user": "anonymous",
+      "dateUpdated": "Jul 5, 2017 7:48:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eTotal Records\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499298520098_-1721983298",
+      "id": "20170705-194840_2019153702",
+      "dateCreated": "Jul 5, 2017 7:48:40 PM",
+      "dateStarted": "Jul 5, 2017 7:48:51 PM",
+      "dateFinished": "Jul 5, 2017 7:48:53 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ndisplay(taxiTripsParquetDF.count())",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 4:22:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "python"
+        },
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "105171027\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499298495682_-819393026",
+      "id": "20170705-194815_1960790736",
+      "dateCreated": "Jul 5, 2017 7:48:15 PM",
+      "dateStarted": "Jul 6, 2017 4:22:49 PM",
+      "dateFinished": "Jul 6, 2017 4:22:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Average Trip Miles, Average Total, Average Duration(Mins)",
+      "user": "anonymous",
+      "dateUpdated": "Jul 5, 2017 7:56:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eAverage Trip Miles, Average Total, Average Duration(Mins)\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499298568584_426298030",
+      "id": "20170705-194928_1613782722",
+      "dateCreated": "Jul 5, 2017 7:49:28 PM",
+      "dateStarted": "Jul 5, 2017 7:56:15 PM",
+      "dateFinished": "Jul 5, 2017 7:56:15 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ntaxiTripsParquetDF.agg(avg(taxiTripsParquetDF[\"TripMiles\"]), avg(taxiTripsParquetDF[\"TripTotal\"]), avg(taxiTripsParquetDF[\"TripSeconds\"])/60).show()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 5, 2017 7:56:01 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----------------+------------------+-----------------------+\n|   avg(TripMiles)|    avg(TripTotal)|(avg(TripSeconds) / 60)|\n+-----------------+------------------+-----------------------+\n|2.748468799845742|14.928485522635926|     12.380731334465263|\n+-----------------+------------------+-----------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499298553873_1075369424",
+      "id": "20170705-194913_2135726996",
+      "dateCreated": "Jul 5, 2017 7:49:13 PM",
+      "dateStarted": "Jul 5, 2017 7:56:01 PM",
+      "dateFinished": "Jul 5, 2017 7:56:02 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\ntaxiTripsParquetDF.createOrReplaceTempView(\"taxi_trips\")\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 4:22:55 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/python",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1499298989623_1891867887",
+      "id": "20170705-195629_257586604",
+      "dateCreated": "Jul 5, 2017 7:56:29 PM",
+      "dateStarted": "Jul 6, 2017 4:22:55 PM",
+      "dateFinished": "Jul 6, 2017 4:22:56 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Trip Count By Hour Of Day",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 12:04:10 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eTrip Count By Hour Of Day\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499300233084_-1234102556",
+      "id": "20170705-201713_2046841563",
+      "dateCreated": "Jul 5, 2017 8:17:13 PM",
+      "dateStarted": "Jul 6, 2017 12:04:10 AM",
+      "dateFinished": "Jul 6, 2017 12:04:10 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n\nselect hour(TripStartTS) as hour, avg(TripSeconds)/60 as tripInMins, count(1) as count from taxi_trips group by hour(TripStartTS) order by count desc",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 4:22:59 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "multiBarChart": {
+                  "stacked": false
+                },
+                "scatterChart": {
+                  "xAxis": {
+                    "name": "hour",
+                    "index": 0.0,
+                    "aggr": "sum"
+                  },
+                  "yAxis": {
+                    "name": "count",
+                    "index": 2.0,
+                    "aggr": "sum"
+                  },
+                  "group": {
+                    "name": "tripInMins",
+                    "index": 1.0,
+                    "aggr": "sum"
+                  }
+                }
+              },
+              "keys": [
+                {
+                  "name": "hour",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "count",
+                  "index": 2.0,
+                  "aggr": "sum"
+                }
+              ],
+              "commonSetting": {}
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "hour\ttripInMins\tcount\n15\t12.264236735732378\t6882404\n14\t13.607594821720394\t6856685\n16\t11.310575423029398\t6252269\n13\t14.62038943006212\t6248083\n12\t15.13080024798693\t5637303\n17\t10.8395308670131\t5635428\n18\t10.600625558688469\t5292503\n11\t14.795306640261721\t5279004\n9\t12.890161277895995\t5171573\n10\t13.752751651016906\t5127848\n8\t12.395008156393423\t5073197\n7\t12.008065463167977\t4755025\n19\t10.293608109514219\t4743699\n5\t12.56739411384534\t4693386\n6\t11.995767441432827\t4625300\n4\t13.210270009941537\t4136343\n20\t10.0042421932059\t3977363\n21\t9.542366818015202\t3295612\n3\t13.971557580325758\t2854082\n22\t9.288026671740104\t2605581\n23\t9.519287746075669\t1862420\n2\t14.274030593081275\t1687331\n0\t10.599376064303662\t1292832\n1\t13.065289950276421\t1185756\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499300576580_1813231327",
+      "id": "20170705-202256_1431291605",
+      "dateCreated": "Jul 5, 2017 8:22:56 PM",
+      "dateStarted": "Jul 6, 2017 4:22:59 PM",
+      "dateFinished": "Jul 6, 2017 4:23:07 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\ntaxiTripsParquetDF.select(hour(taxiTripsParquetDF[\"TripStartTS\"]).alias(\"hour\")).groupBy(\"hour\").count().alias(\"count\").orderBy(\"count\", ascending\u003dFalse).show(100)\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 5, 2017 8:16:08 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----+-------+\n|hour|  count|\n+----+-------+\n|  15|6882404|\n|  14|6856685|\n|  16|6252269|\n|  13|6248083|\n|  12|5637303|\n|  17|5635428|\n|  18|5292503|\n|  11|5279004|\n|   9|5171573|\n|  10|5127848|\n|   8|5073197|\n|   7|4755025|\n|  19|4743699|\n|   5|4693386|\n|   6|4625300|\n|   4|4136343|\n|  20|3977363|\n|  21|3295612|\n|   3|2854082|\n|  22|2605581|\n|  23|1862420|\n|   2|1687331|\n|   0|1292832|\n|   1|1185756|\n+----+-------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499298667922_-1344931020",
+      "id": "20170705-195107_2136370087",
+      "dateCreated": "Jul 5, 2017 7:51:07 PM",
+      "dateStarted": "Jul 5, 2017 8:16:08 PM",
+      "dateFinished": "Jul 5, 2017 8:16:15 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Trip Count By Day Of Month",
+      "user": "anonymous",
+      "dateUpdated": "Jul 5, 2017 8:18:30 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eTrip Count By Day Of Month\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499300290179_1349394364",
+      "id": "20170705-201810_800737718",
+      "dateCreated": "Jul 5, 2017 8:18:10 PM",
+      "dateStarted": "Jul 5, 2017 8:18:30 PM",
+      "dateFinished": "Jul 5, 2017 8:18:30 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect TripStartDay, avg(TripSeconds)/60 as tripInMins, count(1) as count from taxi_trips group by TripStartDay order by count desc",
+      "user": "anonymous",
+      "dateUpdated": "Jul 5, 2017 8:35:20 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "lineChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "lineChart": {
+                  "forceY": true
+                },
+                "stackedAreaChart": {}
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "TripStartDay",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "count",
+                  "index": 2.0,
+                  "aggr": "max"
+                },
+                {
+                  "name": "tripInMins",
+                  "index": 1.0,
+                  "aggr": "max"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "TripStartDay\ttripInMins\tcount\n14\t12.624223397419627\t3648939\n19\t12.51353376715721\t3642931\n18\t12.529328253783216\t3635855\n16\t12.666488266326004\t3627765\n15\t12.659468688231438\t3627533\n13\t12.556613514722336\t3608671\n17\t12.538844010093287\t3592877\n20\t12.455922345635965\t3590421\n12\t12.389331484718676\t3587430\n21\t12.464028736427462\t3527613\n11\t12.546742449231724\t3494031\n22\t12.273227477894215\t3485915\n1\t12.1590076122006\t3478181\n9\t12.433997135582803\t3463615\n6\t12.344254816035125\t3462254\n10\t12.512250354434007\t3452090\n8\t12.471465746239964\t3438609\n7\t12.37430637606627\t3428442\n23\t12.265215252272446\t3428011\n5\t12.162955735832494\t3391592\n3\t12.272852450174323\t3389518\n4\t12.172326985203632\t3389295\n2\t12.1625714640049\t3367178\n28\t12.319865386076852\t3297306\n24\t12.260848013364983\t3263598\n27\t12.268115734851209\t3261763\n26\t12.155607386176174\t3236713\n25\t12.280909986305794\t3186700\n30\t12.286115272580053\t3072288\n29\t12.334743611390047\t3070070\n31\t12.078394643694246\t2023823\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499300822516_-1395453551",
+      "id": "20170705-202702_829580843",
+      "dateCreated": "Jul 5, 2017 8:27:02 PM",
+      "dateStarted": "Jul 5, 2017 8:30:12 PM",
+      "dateFinished": "Jul 5, 2017 8:30:15 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ntaxiTripsParquetDF.select(\"TripStartDay\").groupBy(\"TripStartDay\").count().alias(\"count\").orderBy(\"count\", ascending\u003dFalse).show(31)",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 10:46:08 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "python"
+        },
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------+-------+\n|TripStartDay|  count|\n+------------+-------+\n|          14|3648939|\n|          19|3642931|\n|          18|3635855|\n|          16|3627765|\n|          15|3627533|\n|          13|3608671|\n|          17|3592877|\n|          20|3590421|\n|          12|3587430|\n|          21|3527613|\n|          11|3494031|\n|          22|3485915|\n|           1|3478181|\n|           9|3463615|\n|           6|3462254|\n|          10|3452090|\n|           8|3438609|\n|           7|3428442|\n|          23|3428011|\n|           5|3391592|\n|           3|3389518|\n|           4|3389295|\n|           2|3367178|\n|          28|3297306|\n|          24|3263598|\n|          27|3261763|\n|          26|3236713|\n|          25|3186700|\n|          30|3072288|\n|          29|3070070|\n|          31|2023823|\n+------------+-------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499299246737_1238512825",
+      "id": "20170705-200046_1891551170",
+      "dateCreated": "Jul 5, 2017 8:00:46 PM",
+      "dateStarted": "Jul 6, 2017 10:46:08 AM",
+      "dateFinished": "Jul 6, 2017 10:46:11 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Trip Count By Month",
+      "user": "anonymous",
+      "dateUpdated": "Jul 5, 2017 8:20:20 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eTrip Count By Month\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499300388513_93294829",
+      "id": "20170705-201948_1460701485",
+      "dateCreated": "Jul 5, 2017 8:19:48 PM",
+      "dateStarted": "Jul 5, 2017 8:20:20 PM",
+      "dateFinished": "Jul 5, 2017 8:20:20 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect TripStartMonth, count(1) as count from taxi_trips group by TripStartMonth order by count desc",
+      "user": "anonymous",
+      "dateUpdated": "Jul 5, 2017 8:37:09 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "lineChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "lineChart": {
+                  "forceY": true
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "TripStartMonth",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "count",
+                  "index": 1.0,
+                  "aggr": "max"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "TripStartMonth\tcount\n5\t9675905\n6\t9564953\n3\t9558468\n4\t9110822\n10\t8941110\n7\t8929889\n8\t8799169\n9\t8246897\n11\t8185005\n2\t8161907\n12\t8148873\n1\t7848029\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499301356270_1369361912",
+      "id": "20170705-203556_1507085611",
+      "dateCreated": "Jul 5, 2017 8:35:56 PM",
+      "dateStarted": "Jul 5, 2017 8:36:30 PM",
+      "dateFinished": "Jul 5, 2017 8:36:32 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ntaxiTripsParquetDF.select(\"TripStartMonth\").groupBy(\"TripStartMonth\").count().alias(\"count\").orderBy(\"count\", ascending\u003dFalse).show(12)",
+      "user": "anonymous",
+      "dateUpdated": "Jul 5, 2017 8:21:19 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "python"
+        },
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------+-------+\n|TripStartMonth|  count|\n+--------------+-------+\n|             5|9675905|\n|             6|9564953|\n|             3|9558468|\n|             4|9110822|\n|            10|8941110|\n|             7|8929889|\n|             8|8799169|\n|             9|8246897|\n|            11|8185005|\n|             2|8161907|\n|            12|8148873|\n|             1|7848029|\n+--------------+-------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499300348919_-1109243053",
+      "id": "20170705-201908_1487846201",
+      "dateCreated": "Jul 5, 2017 8:19:08 PM",
+      "dateStarted": "Jul 5, 2017 8:21:19 PM",
+      "dateFinished": "Jul 5, 2017 8:21:21 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Trip Count By Year",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 4:21:39 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eTrip Count By Year\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499300501384_312402488",
+      "id": "20170705-202141_1249052772",
+      "dateCreated": "Jul 5, 2017 8:21:41 PM",
+      "dateStarted": "Jul 6, 2017 4:21:39 PM",
+      "dateFinished": "Jul 6, 2017 4:21:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ntaxiTripsParquetDF.select(\"TripStartYear\").groupBy(\"TripStartYear\").count().alias(\"count\").orderBy(\"count\", ascending\u003dFalse).show()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 5, 2017 8:22:31 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "python"
+        },
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------------+--------+\n|TripStartYear|   count|\n+-------------+--------+\n|         2014|31021726|\n|         2015|27400744|\n|         2013|26870287|\n|         2016|19878270|\n+-------------+--------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499300446320_1993108277",
+      "id": "20170705-202046_116791812",
+      "dateCreated": "Jul 5, 2017 8:20:46 PM",
+      "dateStarted": "Jul 5, 2017 8:22:31 PM",
+      "dateFinished": "Jul 5, 2017 8:22:33 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Days With Highest Taxi Rides",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 4:22:09 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eDays With Highest Taxi Rides\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499301489931_1082106081",
+      "id": "20170705-203809_1310231768",
+      "dateCreated": "Jul 5, 2017 8:38:09 PM",
+      "dateStarted": "Jul 6, 2017 4:22:09 PM",
+      "dateFinished": "Jul 6, 2017 4:22:09 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect TripStartDT, count(1) as count from taxi_trips group by TripStartDT order by count desc limit 10",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 4:23:19 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "lineChart": {
+                  "forceY": true
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "TripStartDT",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "count",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "TripStartDT\tcount\n2014-03-15\t150797\n2013-03-16\t132541\n2015-03-14\t129398\n2014-05-16\t120392\n2014-05-17\t116418\n2014-11-01\t115524\n2014-04-04\t114655\n2013-12-06\t113662\n2014-04-26\t111709\n2013-12-07\t111696\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499300545601_1327446708",
+      "id": "20170705-202225_249074513",
+      "dateCreated": "Jul 5, 2017 8:22:25 PM",
+      "dateStarted": "Jul 6, 2017 4:23:19 PM",
+      "dateFinished": "Jul 6, 2017 4:23:25 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\nmomVolumes \u003d taxiTripsParquetDF.select(\"TripStartYear\", \"TripStartMonth\").groupBy(\"TripStartYear\", \"TripStartMonth\").count().orderBy(\"TripStartYear\", \"TripStartMonth\", ascending\u003dTrue)\nmomVolumes \u003d momVolumes.withColumn(\"rowid\", monotonically_increasing_id())\nmomVolumes.show(20, False)\nmomVolumes.createOrReplaceTempView(\"taxi_monthly_volumes\")\n\nyoyVolumes \u003d momVolumes.groupBy(\"TripStartYear\").sum(\"count\").orderBy(\"TripStartYear\", ascending\u003dTrue).withColumnRenamed(\"sum(count)\", \"count\")\nyoyVolumes \u003d yoyVolumes.withColumn(\"rowid\", monotonically_increasing_id())\nyoyVolumes.show()\nyoyVolumes.createOrReplaceTempView(\"taxi_yearly_volumes\")\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 4:23:43 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------------+--------------+-------+-----+\n|TripStartYear|TripStartMonth|count  |rowid|\n+-------------+--------------+-------+-----+\n|2013         |1             |1590061|0    |\n|2013         |2             |1800402|1    |\n|2013         |3             |2261368|2    |\n|2013         |4             |2116552|3    |\n|2013         |5             |2260977|4    |\n|2013         |6             |2386408|5    |\n|2013         |7             |2302444|6    |\n|2013         |8             |2399390|7    |\n|2013         |9             |2318945|8    |\n|2013         |10            |2515591|9    |\n|2013         |11            |2423222|10   |\n|2013         |12            |2494927|11   |\n|2014         |1             |2287575|12   |\n|2014         |2             |2305663|13   |\n|2014         |3             |2770054|14   |\n|2014         |4             |2653233|15   |\n|2014         |5             |2883632|16   |\n|2014         |6             |2797021|17   |\n|2014         |7             |2624832|18   |\n|2014         |8             |2642107|19   |\n+-------------+--------------+-------+-----+\nonly showing top 20 rows\n\n+-------------+--------+-----+\n|TripStartYear|   count|rowid|\n+-------------+--------+-----+\n|         2013|26870287|    0|\n|         2014|31021726|    1|\n|         2015|27400744|    2|\n|         2016|19878270|    3|\n+-------------+--------+-----+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499301841740_2051595044",
+      "id": "20170705-204401_894908788",
+      "dateCreated": "Jul 5, 2017 8:44:01 PM",
+      "dateStarted": "Jul 6, 2017 4:23:43 PM",
+      "dateFinished": "Jul 6, 2017 4:23:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Month On Month Trips Growth",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 4:24:52 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eMonth On Month Trips Growth\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499372657868_545363734",
+      "id": "20170706-162417_512579313",
+      "dateCreated": "Jul 6, 2017 4:24:17 PM",
+      "dateStarted": "Jul 6, 2017 4:24:52 PM",
+      "dateFinished": "Jul 6, 2017 4:24:52 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n\nselect concat(TripStartYear, \u0027-\u0027,TripStartMonth) as YearMonth, TripStartYear, TripStartMonth, count, prev, (count - prev) as change, ((count-prev)/count)*100 as change_percentage from (\nSELECT rowid, TripStartYear, TripStartMonth, count, \nlag(count, 1) over (partition by 1 order by rowid) as prev\nFROM taxi_monthly_volumes\norder by rowid\n) where count \u003e 1000",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 5:01:12 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "lineChart": {
+                  "forceY": true
+                },
+                "multiBarChart": {
+                  "stacked": true
+                },
+                "stackedAreaChart": {}
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "YearMonth",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "TripStartYear",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "change_percentage",
+                  "index": 6.0,
+                  "aggr": "max"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "YearMonth\tTripStartYear\tTripStartMonth\tcount\tprev\tchange\tchange_percentage\n2013-1\t2013\t1\t1590061\tnull\tnull\tnull\n2013-2\t2013\t2\t1800402\t1590061\t210341\t11.683001907351803\n2013-3\t2013\t3\t2261368\t1800402\t460966\t20.384386795957138\n2013-4\t2013\t4\t2116552\t2261368\t-144816\t-6.8420714445003\n2013-5\t2013\t5\t2260977\t2116552\t144425\t6.387725306360922\n2013-6\t2013\t6\t2386408\t2260977\t125431\t5.256058477846202\n2013-7\t2013\t7\t2302444\t2386408\t-83964\t-3.646733644770513\n2013-8\t2013\t8\t2399390\t2302444\t96946\t4.040443612751575\n2013-9\t2013\t9\t2318945\t2399390\t-80445\t-3.4690344100442227\n2013-10\t2013\t10\t2515591\t2318945\t196646\t7.817089503023346\n2013-11\t2013\t11\t2423222\t2515591\t-92369\t-3.811825742750767\n2013-12\t2013\t12\t2494927\t2423222\t71705\t2.8740319857053933\n2014-1\t2014\t1\t2287575\t2494927\t-207352\t-9.064271116793984\n2014-2\t2014\t2\t2305663\t2287575\t18088\t0.7845031992966881\n2014-3\t2014\t3\t2770054\t2305663\t464391\t16.76469122984606\n2014-4\t2014\t4\t2653233\t2770054\t-116821\t-4.402968001679461\n2014-5\t2014\t5\t2883632\t2653233\t230399\t7.989889139807022\n2014-6\t2014\t6\t2797021\t2883632\t-86611\t-3.096544502168557\n2014-7\t2014\t7\t2624832\t2797021\t-172189\t-6.560000792431668\n2014-8\t2014\t8\t2642107\t2624832\t17275\t0.6538342315432343\n2014-9\t2014\t9\t2487528\t2642107\t-154579\t-6.214161207431635\n2014-10\t2014\t10\t2652742\t2487528\t165214\t6.228046300771052\n2014-11\t2014\t11\t2481868\t2652742\t-170874\t-6.884894764749777\n2014-12\t2014\t12\t2435471\t2481868\t-46397\t-1.9050524518665999\n2015-1\t2015\t1\t2263521\t2435471\t-171950\t-7.596571889547303\n2015-2\t2015\t2\t2303627\t2263521\t40106\t1.7409936591297117\n2015-3\t2015\t3\t2550713\t2303627\t247086\t9.686938514838792\n2015-4\t2015\t4\t2387737\t2550713\t-162976\t-6.825542344068881\n2015-5\t2015\t5\t2586547\t2387737\t198810\t7.686309199098257\n2015-6\t2015\t6\t2445838\t2586547\t-140709\t-5.752997541129052\n2015-7\t2015\t7\t2256202\t2445838\t-189636\t-8.405098479657406\n2015-8\t2015\t8\t2232803\t2256202\t-23399\t-1.0479652705590239\n2015-9\t2015\t9\t2145592\t2232803\t-87211\t-4.06465907777434\n2015-10\t2015\t10\t2272083\t2145592\t126491\t5.567182184805749\n2015-11\t2015\t11\t1984106\t2272083\t-287977\t-14.514194302118938\n2015-12\t2015\t12\t1971975\t1984106\t-12131\t-0.6151700706144855\n2016-1\t2016\t1\t1706872\t1971975\t-265103\t-15.531510271420471\n2016-2\t2016\t2\t1752215\t1706872\t45343\t2.587753215216169\n2016-3\t2016\t3\t1976333\t1752215\t224118\t11.340092990401923\n2016-4\t2016\t4\t1953300\t1976333\t-23033\t-1.1791839451185175\n2016-5\t2016\t5\t1944749\t1953300\t-8551\t-0.4396968451969894\n2016-6\t2016\t6\t1935686\t1944749\t-9063\t-0.46820610367590615\n2016-7\t2016\t7\t1746411\t1935686\t-189275\t-10.837941355156374\n2016-8\t2016\t8\t1524869\t1746411\t-221542\t-14.528592292190346\n2016-9\t2016\t9\t1294832\t1524869\t-230037\t-17.76577965326776\n2016-10\t2016\t10\t1500694\t1294832\t205862\t13.7177865707466\n2016-11\t2016\t11\t1295809\t1500694\t-204885\t-15.811358001063427\n2016-12\t2016\t12\t1246500\t1295809\t-49309\t-3.955796229442439\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499301648856_1106961517",
+      "id": "20170705-204048_2138710806",
+      "dateCreated": "Jul 5, 2017 8:40:48 PM",
+      "dateStarted": "Jul 6, 2017 5:01:12 PM",
+      "dateFinished": "Jul 6, 2017 5:01:15 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Year On Year Trips Growth",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 4:25:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eYear On Year Trips Growth\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499372704712_-1676884616",
+      "id": "20170706-162504_1315633661",
+      "dateCreated": "Jul 6, 2017 4:25:04 PM",
+      "dateStarted": "Jul 6, 2017 4:25:23 PM",
+      "dateFinished": "Jul 6, 2017 4:25:23 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect TripStartYear, count, prev, (count - prev) as change, ((count-prev)/count)*100 as change_percentage from (\nSELECT rowid, TripStartYear, count, \nlag(count, 1) over (partition by 1 order by rowid) as prev\nFROM taxi_yearly_volumes\norder by rowid\n) where count \u003e 1000",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 4:24:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "multiBarChart": {
+                  "stacked": true
+                },
+                "lineChart": {},
+                "stackedAreaChart": {
+                  "style": "stack"
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "TripStartYear",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "count",
+                  "index": 1.0,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "change_percentage",
+                  "index": 4.0,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "change",
+                  "index": 3.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "TripStartYear\tcount\tprev\tchange\tchange_percentage\n2013\t26870287\tnull\tnull\tnull\n2014\t31021726\t26870287\t4151439\t13.382359833879004\n2015\t27400744\t31021726\t-3620982\t-13.214903945673884\n2016\t19878270\t27400744\t-7522474\t-37.84269959106099\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499301815936_1715293857",
+      "id": "20170705-204335_2005440473",
+      "dateCreated": "Jul 5, 2017 8:43:35 PM",
+      "dateStarted": "Jul 6, 2017 4:24:00 PM",
+      "dateFinished": "Jul 6, 2017 4:24:03 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Count Of Monthly Trips from 2013 - 2016\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 4:27:32 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eCount Of Monthly Trips from 2013 - 2016\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499372808472_1908726657",
+      "id": "20170706-162648_365008893",
+      "dateCreated": "Jul 6, 2017 4:26:48 PM",
+      "dateStarted": "Jul 6, 2017 4:27:32 PM",
+      "dateFinished": "Jul 6, 2017 4:27:32 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n\nselect t_2013.TripStartMonth, count_2013, count_2014,count_2015,count_2016 from\n(select TripStartMonth, count(1) as count_2013 from taxi_trips where TripStartYear\u003d2013 group by TripStartMonth) t_2013\njoin\n(select TripStartMonth, count(1) as count_2014 from taxi_trips where TripStartYear\u003d2014 group by TripStartMonth) t_2014\njoin\n(select TripStartMonth, count(1) as count_2015 from taxi_trips where TripStartYear\u003d2015 group by TripStartMonth) t_2015\njoin\n(select TripStartMonth, count(1) as count_2016 from taxi_trips where TripStartYear\u003d2016 group by TripStartMonth) t_2016\non t_2013.TripStartMonth\u003dt_2014.TripStartMonth\nand t_2013.TripStartMonth\u003dt_2015.TripStartMonth\nand t_2013.TripStartMonth\u003dt_2016.TripStartMonth",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 4:26:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "stackedAreaChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "lineChart": {
+                  "forceY": true
+                },
+                "stackedAreaChart": {
+                  "style": "stack"
+                },
+                "multiBarChart": {
+                  "stacked": false
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "TripStartMonth",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "count_2013",
+                  "index": 1.0,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "count_2014",
+                  "index": 2.0,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "count_2015",
+                  "index": 3.0,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "count_2016",
+                  "index": 4.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql"
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "TripStartMonth\tcount_2013\tcount_2014\tcount_2015\tcount_2016\n12\t2494927\t2435471\t1971975\t1246500\n1\t1590061\t2287575\t2263521\t1706872\n6\t2386408\t2797021\t2445838\t1935686\n3\t2261368\t2770054\t2550713\t1976333\n5\t2260977\t2883632\t2586547\t1944749\n9\t2318945\t2487528\t2145592\t1294832\n4\t2116552\t2653233\t2387737\t1953300\n8\t2399390\t2642107\t2232803\t1524869\n7\t2302444\t2624832\t2256202\t1746411\n10\t2515591\t2652742\t2272083\t1500694\n11\t2423222\t2481868\t1984106\t1295809\n2\t1800402\t2305663\t2303627\t1752215\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499302298832_-1990746588",
+      "id": "20170705-205138_1474933701",
+      "dateCreated": "Jul 5, 2017 8:51:38 PM",
+      "dateStarted": "Jul 6, 2017 4:25:31 PM",
+      "dateFinished": "Jul 6, 2017 4:25:36 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Monthly Trips Count",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 4:28:41 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eMonthly Trips Count\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499372900868_976034026",
+      "id": "20170706-162820_104106222",
+      "dateCreated": "Jul 6, 2017 4:28:20 PM",
+      "dateStarted": "Jul 6, 2017 4:28:41 PM",
+      "dateFinished": "Jul 6, 2017 4:28:41 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n\nselect concat(TripStartYear, \u0027-\u0027,TripStartMonth) as YearMonth, count (1) as trip_count, sum(TripSeconds), sum(TripTotal) from taxi_trips group by TripStartYear, TripStartMonth order by TripStartYear, TripStartMonth",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 1:01:11 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "lineChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "lineChart": {
+                  "forceY": true
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "YearMonth",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "trip_count",
+                  "index": 1.0,
+                  "aggr": "max"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql"
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "YearMonth\ttrip_count\tsum(TripSeconds)\tsum(TripTotal)\n2013-1\t1590061\t998694600\t2.1322103600000232E7\n2013-2\t1800402\t1162538820\t2.5435845290000696E7\n2013-3\t2261368\t1625433720\t3.2168267770001E7\n2013-4\t2116552\t1396913820\t3.2305641420001063E7\n2013-5\t2260977\t1579573260\t3.3720607440001085E7\n2013-6\t2386408\t1798328100\t3.540845076000107E7\n2013-7\t2302444\t1712523420\t3.3260494830000963E7\n2013-8\t2399390\t1725426540\t3.3710718650001E7\n2013-9\t2318945\t1706449320\t3.3281157330001198E7\n2013-10\t2515591\t1851001140\t3.661195254000133E7\n2013-11\t2423222\t1703859480\t3.3441984480001062E7\n2013-12\t2494927\t1742371320\t3.329863966000098E7\n2014-1\t2287575\t1590992940\t3.0131586080001004E7\n2014-2\t2305663\t1561460520\t3.097950476000114E7\n2014-3\t2770054\t1921252080\t3.8423741540001534E7\n2014-4\t2653233\t1851985860\t3.8016997360001564E7\n2014-5\t2883632\t2155019940\t4.246542936000175E7\n2014-6\t2797021\t2139377460\t4.165208162000165E7\n2014-7\t2624832\t1994203080\t3.772242836000146E7\n2014-8\t2642107\t1999616580\t3.775121098000136E7\n2014-9\t2487528\t1897425900\t3.7488836660001606E7\n2014-10\t2652742\t2024427360\t4.034168790000202E7\n2014-11\t2481868\t1826333760\t3.563362434000156E7\n2014-12\t2435471\t1665876180\t3.2958005290001273E7\n2015-1\t2263521\t1508650920\t3.1622725620001346E7\n2015-2\t2303627\t1587103920\t3.25844497300015E7\n2015-3\t2550713\t1786939080\t3.785180378000153E7\n2015-4\t2387737\t1738895520\t3.638249147000162E7\n2015-5\t2586547\t1986877680\t3.98958516300016E7\n2015-6\t2445838\t1930315260\t3.826081297000163E7\n2015-7\t2256202\t1745158260\t3.408365384000146E7\n2015-8\t2232803\t1683046370\t3.370430677000158E7\n2015-9\t2145592\t1682168880\t3.3632898590001695E7\n2015-10\t2272083\t1775732910\t3.56171048800019E7\n2015-11\t1984106\t1494628380\t3.048593580000157E7\n2015-12\t1971975\t1373043300\t2.7852339030000772E7\n2016-1\t1706872\t1115144090\t2.6664057450000186E7\n2016-2\t1752215\t1172367600\t2.7598758609999992E7\n2016-3\t1976333\t1383920100\t3.223192959999986E7\n2016-4\t1953300\t1429684786\t3.2737230429999977E7\n2016-5\t1944749\t1513172143\t3.39311034399997E7\n2016-6\t1935686\t1560541358\t3.387426123999987E7\n2016-7\t1746411\t1402993445\t2.9521146960000057E7\n2016-8\t1524869\t1238857636\t2.538132389000027E7\n2016-9\t1294832\t1097741892\t2.2185034670000345E7\n2016-10\t1500694\t1294106442\t2.5958695539999086E7\n2016-11\t1295809\t1093003714\t2.198825470999948E7\n2016-12\t1246500\t942949120\t1.8466985299999774E7\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499315560369_1414699423",
+      "id": "20170706-003240_281007172",
+      "dateCreated": "Jul 6, 2017 12:32:40 AM",
+      "dateStarted": "Jul 6, 2017 1:00:19 AM",
+      "dateFinished": "Jul 6, 2017 1:00:21 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n\nselect concat(TripStartYear, \u0027-\u0027,TripStartMonth) as YearMonth, sum(TripSeconds)/60, sum(TripMiles), sum(TripTotal) from taxi_trips group by TripStartYear, TripStartMonth order by TripStartYear, TripStartMonth",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 1:05:04 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "lineChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "lineChart": {
+                  "forceY": true
+                },
+                "stackedAreaChart": {
+                  "style": "stack"
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "YearMonth",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "sum(TripTotal)",
+                  "index": 3.0,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "sum(TripMiles)",
+                  "index": 2.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql"
+        },
+        "editorMode": "ace/mode/sql",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "YearMonth\t(CAST(sum(CAST(TripSeconds AS BIGINT)) AS DOUBLE) / CAST(60 AS DOUBLE))\tsum(TripMiles)\tsum(TripTotal)\n2013-1\t1.664491E7\t5233709.250000123\t2.1322103600000232E7\n2013-2\t1.9375647E7\t5036101.34000015\t2.5435845290000696E7\n2013-3\t2.7090562E7\t5713719.350000024\t3.2168267770001E7\n2013-4\t2.3281897E7\t5181323.080000169\t3.2305641420001063E7\n2013-5\t2.6326221E7\t5050245.180000211\t3.3720607440001085E7\n2013-6\t2.9972135E7\t4801584.740000294\t3.540845076000107E7\n2013-7\t2.8542057E7\t4208071.780000322\t3.3260494830000963E7\n2013-8\t2.8757109E7\t4338012.360000348\t3.3710718650001E7\n2013-9\t2.8440822E7\t4297132.370000343\t3.3281157330001198E7\n2013-10\t3.0850019E7\t4817017.570000308\t3.661195254000133E7\n2013-11\t2.8397658E7\t4557554.8600003645\t3.3441984480001062E7\n2013-12\t2.9039522E7\t4800474.330000286\t3.329863966000098E7\n2014-1\t2.6516549E7\t4540326.080000314\t3.0131586080001004E7\n2014-2\t2.6024342E7\t4770333.470000305\t3.097950476000114E7\n2014-3\t3.2020868E7\t5994458.35000018\t3.8423741540001534E7\n2014-4\t3.0866431E7\t6836548.639999982\t3.8016997360001564E7\n2014-5\t3.5916999E7\t7707304.74999982\t4.246542936000175E7\n2014-6\t3.5656291E7\t7662324.599999826\t4.165208162000165E7\n2014-7\t3.3236718E7\t7128604.809999938\t3.772242836000146E7\n2014-8\t3.3326943E7\t7265783.279999897\t3.775121098000136E7\n2014-9\t3.1623765E7\t7316442.069999907\t3.7488836660001606E7\n2014-10\t3.3740456E7\t7736030.229999802\t4.034168790000202E7\n2014-11\t3.0438896E7\t6879840.739999945\t3.563362434000156E7\n2014-12\t2.7764603E7\t6235505.640000089\t3.2958005290001273E7\n2015-1\t2.5144182E7\t5928767.260000098\t3.1622725620001346E7\n2015-2\t2.6451732E7\t5955026.28000011\t3.25844497300015E7\n2015-3\t2.9782318E7\t7421721.809999833\t3.785180378000153E7\n2015-4\t2.8981592E7\t7236870.489999854\t3.638249147000162E7\n2015-5\t3.3114628E7\t7914563.419999707\t3.98958516300016E7\n2015-6\t3.2171921E7\t7636566.269999745\t3.826081297000163E7\n2015-7\t2.9085971E7\t6916184.469999861\t3.408365384000146E7\n2015-8\t2.8050772833333332E7\t7329645.989999824\t3.370430677000158E7\n2015-9\t2.8036148E7\t7351807.809999839\t3.3632898590001695E7\n2015-10\t2.95955485E7\t7726079.329999762\t3.56171048800019E7\n2015-11\t2.4910473E7\t6470174.149999999\t3.048593580000157E7\n2015-12\t2.2884055E7\t5586485.720000077\t2.7852339030000772E7\n2016-1\t1.8585734833333332E7\t4903063.109999955\t2.6664057450000186E7\n2016-2\t1.953946E7\t5202239.809999803\t2.7598758609999992E7\n2016-3\t2.3065335E7\t6558981.199999583\t3.223192959999986E7\n2016-4\t2.3828079766666666E7\t7886777.709999432\t3.2737230429999977E7\n2016-5\t2.5219535716666665E7\t8834428.609999279\t3.39311034399997E7\n2016-6\t2.6009022633333333E7\t6404368.669999561\t3.387426123999987E7\n2016-7\t2.3383224083333332E7\t6217846.239999654\t2.9521146960000057E7\n2016-8\t2.0647627266666666E7\t4721789.909999853\t2.538132389000027E7\n2016-9\t1.82956982E7\t4097656.309999955\t2.2185034670000345E7\n2016-10\t2.15684407E7\t5020217.539999744\t2.5958695539999086E7\n2016-11\t1.8216728566666666E7\t4234616.3999993885\t2.198825470999948E7\n2016-12\t1.5715818666666666E7\t3393463.8099995703\t1.8466985299999774E7\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499317286273_-1678446414",
+      "id": "20170706-010126_1489566611",
+      "dateCreated": "Jul 6, 2017 1:01:26 AM",
+      "dateStarted": "Jul 6, 2017 1:04:22 AM",
+      "dateFinished": "Jul 6, 2017 1:04:25 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Count Of Pickups \u0026 Dropoff By Cummunity Area",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 4:30:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eCount Of Pickups \u0026amp; Dropoff By Cummunity Area\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499373000102_-327774372",
+      "id": "20170706-163000_649747149",
+      "dateCreated": "Jul 6, 2017 4:30:00 PM",
+      "dateStarted": "Jul 6, 2017 4:30:36 PM",
+      "dateFinished": "Jul 6, 2017 4:30:36 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n\nselect Dropoff.CommunityArea, Dropoff.avg_tips as Dropoff_avg_tips, Dropoff.avg_miles as Dropoff_avg_miles,  Dropoff.avg_total as Dropoff_avg_total, Pickup.avg_tips as Pickup_avg_tips, Pickup.avg_miles as Pickup_avg_miles, Pickup.avg_total as Pickup_avg_total from\n(select DropoffCommunityArea as CommunityArea, avg(Tips) as avg_tips, avg(TripMiles) avg_miles, avg(TripTotal) avg_total  from taxi_trips where DropoffCommunityArea is not null group by DropoffCommunityArea) Dropoff\njoin\n(select PickupCommunityArea as CommunityArea, avg(Tips) as avg_tips, avg(TripMiles) avg_miles, avg(TripTotal) avg_total  from taxi_trips where PickupCommunityArea is not null group by PickupCommunityArea) Pickup\non Dropoff.CommunityArea\u003dPickup.CommunityArea\n\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 5:03:18 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "lineChart": {
+                  "forceY": true
+                },
+                "multiBarChart": {
+                  "stacked": true
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "CommunityArea",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "Dropoff_avg_tips",
+                  "index": 1.0,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Pickup_avg_tips",
+                  "index": 4.0,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Dropoff_avg_miles",
+                  "index": 2.0,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Pickup_avg_miles",
+                  "index": 5.0,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Dropoff_avg_total",
+                  "index": 3.0,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Pickup_avg_total",
+                  "index": 6.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql"
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "CommunityArea\tDropoff_avg_tips\tDropoff_avg_miles\tDropoff_avg_total\tPickup_avg_tips\tPickup_avg_miles\tPickup_avg_total\n31\t0.9543165739261101\t3.2851823614888067\t15.073323824089172\t0.6423148963331424\t2.6664424537230613\t14.367134744904687\n65\t1.1916291297870474\t7.33622732451144\t25.627945841731663\t0.6815456319098199\t7.236806850205938\t19.800823758942116\n53\t0.8332948294829484\t7.294969746974698\t34.0803905390539\t0.3257621671258035\t3.9979338842975207\t24.713663911845728\n34\t0.6981065398499732\t2.993089922319846\t14.28423072934414\t0.6843629858354165\t2.967920403862175\t14.436498064010193\n28\t0.8034174201283641\t1.8238410362028237\t10.98145799539235\t0.7818380066217396\t1.942224727071925\t11.381302100538871\n76\t3.687645639385174\t10.866702965884848\t39.94893938709211\t4.307590252584642\t11.927590919311143\t42.04455592120208\n26\t0.378649622393127\t4.544895032217834\t17.550052657105237\t0.24348463928201589\t4.054442526751811\t15.952626855367628\n27\t0.7254620074025693\t3.7265800130633555\t15.603623557587625\t0.4159226565783943\t3.0081182569707163\t14.638020176544769\n44\t0.538269386761843\t4.77371973230582\t21.332393332251794\t0.33373394495412845\t3.6971457696228347\t16.100353720693168\n12\t1.4281326949384403\t5.444694115880615\t21.785305962430336\t0.6299176487292346\t2.9599952669443406\t16.78426049505419\n22\t1.0291265735932262\t2.9250666179225395\t14.19310255466706\t0.630658734493592\t2.3806193452086704\t12.35969684999799\n47\t0.6357926829268293\t7.517256097560978\t28.100785907859073\t0.4998979591836734\t6.650929705215419\t17.738458049886624\n1\t1.1128663855363292\t4.1223854888562155\t17.6906061751733\t0.719528083202838\t2.810339936902151\t14.509128458131986\n52\t1.4853261927945471\t11.277444011684521\t40.9350340798442\t0.9735804195804194\t7.166405594405594\t31.176251748251744\n13\t0.7753070201628153\t3.5522278617065726\t16.76406271770067\t0.41152044433076335\t2.089627288339972\t13.210985310775753\n6\t1.0991743723740852\t2.7822002179121115\t13.955342801312788\t0.8445144917701825\t2.426500294845555\t13.09029237162481\n16\t0.8259117207482051\t3.461534352909456\t15.639640284582919\t0.5130342960338123\t2.7298764376217757\t13.178405629215973\n3\t0.9371060994988379\t3.006520366038649\t14.218735373537301\t0.7064424428040207\t2.6129418399108264\t13.464463720053818\n20\t0.6298673073093009\t3.417013294164509\t15.553548097988452\t0.3857451480379658\t2.594052273693158\t14.87955588610285\n40\t0.6605290409725351\t4.244237393066188\t16.58894304367403\t0.40800278134360296\t2.7985130509199827\t14.20567715019255\n57\t1.2486444444444447\t5.6003854166666684\t24.51420208333333\t0.9203414777745067\t3.9290756549896972\t21.050362084191935\n54\t0.6911710677382319\t10.249081515499428\t35.03958668197474\t0.5668496420047733\t3.849594272076371\t26.769809069212414\n48\t0.6611372459465632\t6.0317309888102315\t21.732292760904308\t0.39098622999627836\t3.46315593598809\t16.792205061406776\n5\t1.1474678552391504\t3.3027786505337784\t15.238492013104855\t0.5881904054105451\t2.664297934107574\t13.260543272948565\n19\t0.6463337680310854\t4.282848150957454\t18.214796800979393\t0.44095044708061704\t3.139164262049803\t15.550187381995656\n64\t1.686700295041401\t6.227076234891025\t24.691744551251546\t0.8887178623554506\t3.2004086673402927\t17.02224879308408\n41\t1.8145354727898089\t6.34815247422548\t24.01111026774291\t1.3766763438603964\t4.849949266447449\t21.63807431509904\n15\t0.8475252341066299\t4.163481621345006\t17.36026781092654\t0.4858503734541446\t2.8952724378596777\t14.325061562113108\n43\t0.8277380558921815\t5.512815541111232\t22.194287393044693\t0.6235634772537162\t3.8147040087510433\t18.17511228363684\n37\t0.36812429378531075\t4.025479198767335\t16.575666153055984\t0.2907972945275672\t3.742260709161713\t16.21412789506046\n61\t0.7869350009356868\t4.7378700642505125\t19.134162871935633\t0.44704369358574975\t3.3258750698937614\t15.879083792635193\n9\t1.8265629703963877\t6.646896136477673\t25.818950326141508\t1.041393084927828\t3.0387143336690174\t17.10233971131252\n17\t1.0707670863514842\t5.527890635711348\t20.780459063592534\t0.830315093205051\t3.8007114077815873\t16.96005712567649\n72\t3.431012506424532\t10.734654788418709\t40.489052595511396\t2.0010753197536713\t5.355921364282332\t25.88556134533396\n35\t0.8012878732900321\t3.2602215267383414\t14.934712707282564\t0.560186391648849\t2.325878052052585\t12.596177252337236\n4\t1.143252479881254\t3.5542146503703105\t16.150134060359\t0.5778580467317107\t2.5566331389973063\t13.305953420227274\n55\t1.6745893719806764\t11.178193236714975\t37.878028985507235\t0.9240747330960855\t8.664003558718862\t27.164857651245548\n59\t0.3667164894892495\t1.8090009791383574\t11.47417912237229\t0.20933503228447312\t0.8154912653664853\t9.128797221818752\n8\t0.9151733432915927\t2.0149709132957474\t11.575866846514371\t0.8963287882306626\t2.0856162943708356\t11.865191052999092\n23\t0.7444876965604745\t3.193992326226032\t14.521289255449302\t0.5235224277655983\t2.369974874371859\t13.513357637263837\n39\t1.4345573727125605\t5.638769752658968\t21.317261063737064\t1.0002652481306555\t3.6513573721523422\t18.11628061021616\n49\t0.8856664977192091\t4.797281021056996\t19.491822789476117\t0.8470291599785981\t3.049708400214017\t14.183857009095767\n7\t0.9872862995419823\t2.3218772861445243\t12.5356717368256\t0.7688841447747486\t2.0669176931339903\t11.91795243252995\n51\t1.337838170624451\t7.158620932277923\t28.73916094986809\t0.688421372191864\t3.4279902853673345\t22.596700060716454\n69\t0.4866920294374455\t5.137057087023409\t20.474027275373174\t0.30905592573182605\t3.68338025005615\t16.151878415811936\n63\t0.6747682367262852\t6.085207416424759\t22.38812903829947\t0.4390328385065228\t3.2528520017993703\t17.219201529464687\n10\t1.2588716738429389\t5.369404213920895\t21.828118075197725\t0.8118245064243186\t3.8641632542202906\t17.816464013370936\n77\t1.0277554668435736\t3.5667394363430347\t15.910720665298145\t0.75171058352041\t2.7629086998064194\t14.160961875928772\n50\t1.4512901000344944\t7.514522249051395\t28.45795101759227\t0.7604623878536919\t4.584416839199448\t18.948391994478943\n45\t0.6529277972828574\t5.260204548923827\t21.388084261944744\t0.4494555177442878\t4.774591638308214\t18.415989304812832\n38\t0.8439669300078346\t3.9363878097352356\t17.096042863671972\t0.5879470690081623\t2.4522271297834\t14.545077912441258\n25\t0.4874124840929189\t4.464101438647195\t16.621678062247913\t0.24630006194331128\t3.763544866181088\t14.05531858085738\n73\t0.988650780872645\t7.832197713733696\t28.170901626147163\t0.47880904666475815\t5.337975951903808\t22.34013455482393\n24\t0.9133876301607923\t2.3143715151055684\t12.375513626460586\t0.6473592240124142\t2.086571617834713\t11.709466126148305\n70\t0.8602611812905429\t7.167965175827928\t26.03524069648344\t0.32903631284916196\t3.9704509177972884\t18.19521947326417\n62\t0.9924630771019884\t6.463538783579488\t23.329818583556225\t2.005747052172509\t5.427434986270394\t25.795929575189792\n29\t0.9088958808848311\t4.501685225478902\t18.36739008937903\t0.6296072394112346\t4.16364674076299\t18.754983478522078\n21\t0.856695153136379\t2.946710206274986\t14.029203761533855\t0.4861990237700308\t2.281856236230317\t12.073893118894008\n32\t0.9751963459287589\t2.0252414598475648\t11.64485658504642\t1.0218302157961783\t2.153841160939143\t12.033959465083958\n60\t1.0080984803863826\t4.144966741273021\t17.292220128008783\t0.6583948155533402\t3.0332738626226576\t15.275532875059035\n75\t2.133832729667435\t11.013081988804743\t39.05703161014159\t0.9996961063627728\t6.528423551756887\t29.71160018993352\n56\t3.1226553549466805\t8.60159554777786\t33.88049331055667\t3.794020537040337\t9.044137751951142\t36.978025968401674\n58\t0.6025244310804344\t4.352145566376215\t19.13332331032598\t0.41853543307086616\t2.183603435934145\t13.734799570508235\n11\t0.8541499372342184\t4.1889210887398916\t17.86140196374181\t0.47767097643769957\t2.948498972468821\t13.589263678115016\n33\t1.1421511992962683\t2.7611404662866654\t14.16210604146251\t1.166951664353014\t2.959142103690508\t14.711197005050519\n68\t0.42416671589767824\t4.715198794824836\t20.3010929284575\t0.2788270957211146\t3.64641208022388\t17.02651276670165\n71\t0.6007973243118557\t6.178151622328156\t25.372263570659694\t0.3055553824583268\t3.6091104533416405\t22.49333385262502\n14\t0.8598851069397202\t3.694243948627905\t16.229618446240938\t0.5161223522584389\t3.193858036184965\t14.702193393945258\n42\t1.4366309779938675\t5.9044982042420555\t23.102049839909196\t1.0429162549407118\t4.024650588271623\t20.00839118083004\n2\t0.5720188172856261\t3.125653563487143\t15.455522553515161\t0.4197243860517959\t2.156892661127758\t13.228355609287142\n30\t0.8795897541405207\t5.0880028803621045\t20.04951280732435\t0.4840853350189632\t3.7743230088495583\t18.71825600505688\n66\t0.7139951053099972\t6.025499851676061\t24.732855977454758\t0.4783293637291598\t4.0285522286492\t18.29752636951344\n46\t0.6824083184257602\t6.866279069767443\t26.715423375074536\t0.5268069688559976\t4.697400555041628\t22.494751773049636\n67\t0.3791821756225426\t5.586250764525995\t21.93961467889908\t0.2222135067916587\t3.743935335756648\t19.34026975320452\n18\t0.8820590900851911\t5.3393429400036245\t20.11051567881094\t0.39595233591829027\t4.50114999054284\t15.454011726877246\n74\t2.5952850678733035\t10.01333031674208\t38.20319758672701\t1.4987651821862353\t4.7374089068825915\t26.843056680161943\n36\t0.7767310664605873\t3.9274530934695813\t16.827906148033655\t0.5535719643303609\t2.658661443573929\t14.186483873656138\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499316793032_1062042857",
+      "id": "20170706-005313_1136867929",
+      "dateCreated": "Jul 6, 2017 12:53:13 AM",
+      "dateStarted": "Jul 6, 2017 5:03:18 PM",
+      "dateFinished": "Jul 6, 2017 5:03:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 6, 2017 1:22:42 AM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1499318562618_42754888",
+      "id": "20170706-012242_1298212453",
+      "dateCreated": "Jul 6, 2017 1:22:42 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "CHI Taxi Data Analysis 7-5",
+  "id": "2CMQDXHVQ",
+  "angularObjects": {
+    "2CJGGF4ED:shared_process": [],
+    "2CMQKW16J:shared_process": [],
+    "2CNP5U8CQ:shared_process": [],
+    "2CNB7R1MH:shared_process": [],
+    "2CK287XVT:shared_process": [],
+    "2CJJP5PK8:shared_process": [],
+    "2CJ67KEVK:shared_process": [],
+    "2CMDMTRHW:shared_process": [],
+    "2CKFR9DTC:shared_process": [],
+    "2CKGHRB8T:shared_process": [],
+    "2CJR6BXFC:shared_process": [],
+    "2CN7BP6XQ:shared_process": [],
+    "2CNE97KJ1:shared_process": [],
+    "2CM9ZBFJB:shared_process": [],
+    "2CMF4FUJM:shared_process": [],
+    "2CMQUEE8S:shared_process": [],
+    "2CJC1ZHM6:shared_process": [],
+    "2CNXMVWC7:shared_process": [],
+    "2CK9FTHR8:shared_process": []
+  },
+  "config": {
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {}
+}
