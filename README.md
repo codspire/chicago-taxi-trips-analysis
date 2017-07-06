@@ -57,15 +57,17 @@ Create Parquet Format for improved performance and resource optimization. Raw cs
 ```bash
 spark-submit  --master local[*]  --verbose --name ConvertTextToParquet --driver-memory 20g  --executor-memory 10g --num-executors 4 --conf spark.local.dir=/mnt/spark-tmp/ /mnt/data/chi-taxi-data-csv-aws-parquet.py
 ```
-	- `local[*]` enables utilization all available cpu cores
-	- `spark.local.dir` specified directory that Spark will use for writing temp files. Default is the system tmp folder which may run out of space so its better to overwrite the path using this conf
-	- Though you can directly read/write file on S3 (s3a://), I preferred creating the file locally and then using `aws s3 sync` to copy over to S3
+
+- `local[*]` enables utilization all available cpu cores
+- `spark.local.dir` specified directory that Spark will use for writing temp files. Default is the system tmp folder which may run out of space so its better to overwrite the path using this conf
+- Though you can directly read/write file on S3 (s3a://), I preferred creating the file locally and then using `aws s3 sync` to copy over to S3
 
 ## Step 3: Basic Data Analysis Using PL/SQL (Hive, Spark)
 ### Lauch EMR Cluster
 - Launch an EMR cluster with Spark, Zeppelin, Ganglia, Hive, Presto, Hue (latest version is emr-5.6.0 at the time of writing)
 - Enter below Spark configuration on the lauch wizard to ensure we are using KryoSerializer and Python v3.4
-```JavaScript
+
+```bash
 [{"classification":"spark","properties":{"maximizeResourceAllocation":"true"}},{"classification":"spark-defaults","properties":{"spark.serializer":"org.apache.spark.serializer.KryoSerializer"}},{"configurations":[{"classification":"export","properties":{"PYSPARK_PYTHON":"python34"}}],"classification":"spark-env","properties":{}}]
 ```
 
