@@ -82,7 +82,7 @@ $ hive
 ```
 ```sql
 CREATE EXTERNAL TABLE taxi_trips (
-	TripID STRING,
+    TripID STRING,
     TaxiID STRING,
     TripStartTS TIMESTAMP,
     TripEndTS TIMESTAMP,
