@@ -49,7 +49,7 @@ root
 ```
 
 ## Step 2: Convert To Parquet
-Create Parquet Format for improved performance and resource optimization. Raw csv file size is ~40GB so its better to split it into small files.
+Create Parquet Format for improved performance and resource optimization. Raw csv file size is ~40GB (105 Million Rows) so its better to split it into small files.
 
 - Writing to Parquet format is quite cpu intensive, so make sure to use the right EC2 instance. My standalone Spark instance on `c4.8xlarge (36 vCPU, 60GiB)` took around 4hrs to create the parquet file of this ~40GB csv. The size of parquet file was ~7GB.
 - See instructions on [how to setup Standalone Spark/PySpark on EC2]( https://gist.github.com/codspire/ee4a46ec054f962d9ef028b27fcb2635)
